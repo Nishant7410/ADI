@@ -3,14 +3,14 @@
 using namespace std;
 
 struct ListNode {
-      int val;
+      int data;
       ListNode *next;
   };
 
 struct ListNode * newNode(int data)
 {
 	ListNode * temp=new ListNode();
-	temp->val=data;
+	temp->data=data;
 	temp->next=NULL;
 	return temp;
 }
@@ -19,11 +19,11 @@ struct ListNode * newNode(int data)
  struct compare{
  bool operator()(const ListNode *lhs, const ListNode *rhs)
 {
-    return lhs->val > rhs->val;
+    return lhs->data > rhs->data;
 }
  };
 
-void mergeKLists(vector<ListNode*> &A) {
+struct ListNode* mergeKLists(vector<ListNode*> &A) {
     priority_queue<ListNode *,vector<ListNode *>,compare> minHeap;
     for(int i=0;i<A.size();i++)
     {
@@ -35,15 +35,31 @@ void mergeKLists(vector<ListNode*> &A) {
     while(!minHeap.empty())
     {
         temp=minHeap.top();
-        cout<<temp->val<<" ";
+        minHeap.pop();
         if(temp->next)
         minHeap.push(temp->next);
-
-        minHeap.pop();
+        if(head==NULL)
+        {
+            head=temp;
+            tail=temp;
+        }
+        else
+        {
+            tail->next=temp;
+            tail=temp;
+        }
     }
+    return head;
 }
 
-
+void print(struct ListNode *head)
+{
+    while(head!=NULL)
+    {
+        cout<<head->data<<" ";
+        head=head->next;
+    }
+}
 int main()
 {
 
@@ -68,6 +84,7 @@ int main()
                curr=temp;
            }
    		}
-   		mergeKLists(arr);
+   		struct ListNode *head= mergeKLists(arr);
+   		print(head);
 }
 
