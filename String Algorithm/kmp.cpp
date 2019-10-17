@@ -7,19 +7,23 @@ int* computeArray(char* data)
     arr[0]=0;
     int i=0;
     int count=0;
-    int j=0;
-    for ( i = 1; data[i]!='\0' ; i++)
+    int j=1;
+    while(j<strlen(data))
     {
         if(data[i]==data[j])
         {
-            count++;
-            arr[i]=count;
+            arr[j]=i+1;
+            i++;
+            j++;
+        }
+        else if(i==0)
+        {
+            arr[j]=0;
             j++;
         }
         else
         {
-            j=0;
-            count=0;
+            i=arr[i-1];
         }
     }
     return arr;
@@ -32,28 +36,22 @@ void kmp(char *txt,char *data)
     int j=0;
     while(i<strlen(txt))
     {
-        if(txt[i]==data[j])
-        {
+       if(txt[i]==data[j])
+       {
+           i++;
+           j++;
+       }
+       else
+       {
+           if(j==0)
             i++;
-            j++;
-        }
-        if(j==strlen(data))
-        {
-            cout<<"Index :"<<i-j<<endl;
-            j=arr[j-1];
-        }
-        else if(i<strlen(txt) && data[j]!=txt[i])
-        {
-            if(j!=0)
-            {
-                j=arr[j-1];
-            }
-            else
-            {
-                i++;
-            }
-
-        }
+           else
+           {
+               j=arr[j-1];
+           }
+       }
+       if(j==strlen(data))
+        cout<<"Index is "<<i-j<<endl;
     }
 }
 
