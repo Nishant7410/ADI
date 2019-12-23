@@ -1,0 +1,2 @@
+# ADI
+Algorithms based questions
